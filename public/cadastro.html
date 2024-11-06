@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lista de Presentes</title>
+  <link rel="icon" href="image/favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="image/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="styles/style.css" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" 
+  rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2 class="text-center">Lista de Presentes</h2>
+        <form id="presente-form" class="form-inline justify-content-center mb-4">
+            <div class="mb-3"> 
+                <label for="descricao" class="form-label">Decrição do Presente <span class="text-danger">*</span></label>
+                <input type="text" id="descricao" class="form-control mr-2" required />
+            </div>
+            <div class="mb-3">
+                <label for="pessoa" class="form-label">Presenteador(es)</label>
+                <input type="text" id="pessoa" class="form-control mr-2" />
+            </div>
+            <button type="submit" class="btn btn-primary rounded-0">Adicionar</button>
+        </form>
+        <div id="list-container" class="mt-4">
+            <h3>Itens da Lista</h3>
+            <ul id="presente-list" class="list-group"></ul>
+        </div>
+    </div>
+  <script src="scripts/cadastro.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
+  integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>

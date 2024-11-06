@@ -1,0 +1,12 @@
+@font-face {
+    src: local('Trajan Pro Bold'), url('/fonts/TrajanPro-Bold.woff') format('woff');
+    font-family: 'Trajan Pro Bold';
+    font-style: normal;
+    font-weight: normal;
+}
+
+@media (max-width: 576px) {
+    body {
+      font-size: 0.8rem;
+    }
+}
