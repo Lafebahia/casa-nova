@@ -11,8 +11,8 @@
   rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
 <body>
-    <div class="container mt-5">
-        <h2 class="text-center">Lista de Presentes</h2>
+    <div class="container mt-4">
+        <h2>Lista de Presentes</h2>
         <form id="presente-form" class="form-inline justify-content-center mb-4">
             <div class="mb-3"> 
                 <label for="descricao" class="form-label">Decrição do Presente <span class="text-danger">*</span></label>
@@ -22,9 +22,25 @@
                 <label for="pessoa" class="form-label">Presenteador(es)</label>
                 <input type="text" id="pessoa" class="form-control mr-2" />
             </div>
-            <button type="submit" class="btn btn-primary rounded-0">Adicionar</button>
+            <button type="submit" class="btn btn-primary rounded-0">Adicionar Item</button>
         </form>
-        <div id="list-container" class="mt-4">
+
+        <div class="row g-3 mt-2">
+            <div class="col-md-4">
+                <input class="form-control" type="file" id="arquivoItens">
+            </div>
+            <div class="col-auto">
+                <button class="btn btn-secondary rounded-0" onclick="importarArquivo()">Importar Lista</button>
+            </div>
+            <!-- <div class="col-auto">
+                <button class="btn btn-secondary rounded-0" id="gerar20Itens">Gerar 20 itens</button>
+            </div> -->
+            <div class="col-auto">
+                <button class="btn btn-danger rounded-0" id="limpar">Limpar lista</button>
+            </div>
+        </div>
+        
+        <div id="list-container" class="mt-4" style="max-height: 480px; overflow-y: auto;">
             <h3>Itens da Lista</h3>
             <ul id="presente-list" class="list-group"></ul>
         </div>
