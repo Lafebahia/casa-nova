@@ -5,8 +5,42 @@
     font-weight: normal;
 }
 
-@media (max-width: 576px) {
-    body {
-      font-size: 0.8rem;
-    }
+body {
+  font-family: 'Trajan Pro Bold';
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px; 
+}
+
+h2 {
+  font-size: 2em;
+}
+
+h5 {
+  font-size: 1.2em; 
+}
+
+@media (max-width: 768px) {
+  body {
+      font-size: 14px; 
+  }
+  h2 {
+    font-size: 1.8em; 
+  }
+
+  h5 {
+    font-size: 1.1em; 
+  }
+}
+@media (max-width: 480px) {
+  body {
+      font-size: 12px; 
+  }
+  h2 {
+    font-size: 1.6em; 
+  }
+
+  h5 {
+    font-size: 1em;
+  }
 }
