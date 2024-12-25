@@ -6,10 +6,9 @@ const db = new sqlite3.Database("./database.db");
 
 app.use(bodyParser.json());
 app.use(express.static("public"));
+app.use(express.urlencoded({ extended: true }));
 
-// Cria as tabelas
 db.run("CREATE TABLE IF NOT EXISTS presente (id INTEGER PRIMARY KEY AUTOINCREMENT, descricao TEXT, nome_pessoa TEXT)");
-db.run("CREATE TABLE IF NOT EXISTS sugestao_presente (id INTEGER PRIMARY KEY AUTOINCREMENT, descricao TEXT, nome_pessoa TEXT)");
 
 // Rotas da navbar 
 app.get("/", (req, res) => {
@@ -51,12 +50,22 @@ app.get("/get-items", (req, res) => {
 
 app.put("/set-item/:id", (req, res) => {
   const { id } = req.params;
-  const { pessoa } = req.body;
-  db.run("UPDATE presente SET nome_pessoa = ? WHERE id = ?", [pessoa, id], (err) => {
+  const { descricao, pessoa } = req.body;
+  db.run("UPDATE presente SET descricao = ?, nome_pessoa = ? WHERE id = ?", [descricao, pessoa, id], (err) => {
     if (err) {
       return res.status(500).json({ error: "Erro ao atualizar presente" });
     }
     res.json({ message: "Presente atualizado com sucesso!" });
+  });
+});
+
+app.delete("/delete-item/:id", (req, res) => {
+  const { id } = req.params;
+  db.run("DELETE FROM presente WHERE id = ?", [id], (err) => {
+    if (err) {
+      return res.status(500).json({ error: "Erro ao excluir o presente" });
+    }
+    res.json({ message: "Presente excluído com sucesso!" });
   });
 });
   

@@ -22,25 +22,31 @@ h5 {
 
 @media (max-width: 768px) {
   body {
-      font-size: 14px; 
+      font-size: 12px; 
   }
+
   h2 {
     font-size: 1.8em; 
+    font-weight: bold;
   }
 
   h5 {
-    font-size: 1.1em; 
+    font-size: 1.2em; 
+    font-weight: bold;
   }
 }
 @media (max-width: 480px) {
   body {
-      font-size: 12px; 
+      font-size: 10px; 
   }
+
   h2 {
     font-size: 1.6em; 
+    font-weight: bold;
   }
 
   h5 {
     font-size: 1em;
+    font-weight: bold;
   }
 }

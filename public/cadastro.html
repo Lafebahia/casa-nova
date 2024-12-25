@@ -14,6 +14,7 @@
     <div class="container mt-4">
         <h2>Lista de Presentes</h2>
         <form id="presente-form" class="form-inline justify-content-center mb-4">
+            <input type="hidden" id="item-id" />
             <div class="mb-3"> 
                 <label for="descricao" class="form-label">Decrição do Presente <span class="text-danger">*</span></label>
                 <input type="text" id="descricao" class="form-control mr-2" required />
@@ -22,7 +23,8 @@
                 <label for="pessoa" class="form-label">Presenteador(es)</label>
                 <input type="text" id="pessoa" class="form-control mr-2" />
             </div>
-            <button type="submit" class="btn btn-primary rounded-0">Adicionar Item</button>
+            <button type="submit" class="btn btn-success rounded-0">Adicionar Item</button>
+            <button type="button" class="btn btn-primary rounded-0" onclick="limparForm()">Limpar</button>
         </form>
 
         <div class="row g-3 mt-2">
@@ -31,12 +33,6 @@
             </div>
             <div class="col-auto">
                 <button class="btn btn-secondary rounded-0" onclick="importarArquivo()">Importar Lista</button>
-            </div>
-            <!-- <div class="col-auto">
-                <button class="btn btn-secondary rounded-0" id="gerar20Itens">Gerar 20 itens</button>
-            </div> -->
-            <div class="col-auto">
-                <button class="btn btn-danger rounded-0" id="limpar">Limpar lista</button>
             </div>
         </div>
         
