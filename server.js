@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const sqlite3 = require("sqlite3").verbose();
 const https = require("https");
 const fs = require("fs");
+const path = require("path");
 const app = express();
 const db = new sqlite3.Database("./database.db");
 require('dotenv').config();
