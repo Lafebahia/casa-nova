@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const sqlite3 = require("sqlite3").verbose();
 const app = express();
 const db = new sqlite3.Database("./database.db");
+require('dotenv').config();
 
 app.use(bodyParser.json());
 app.use(express.static("public"));
@@ -10,7 +11,6 @@ app.use(express.urlencoded({ extended: true }));
 
 db.run("CREATE TABLE IF NOT EXISTS presente (id INTEGER PRIMARY KEY AUTOINCREMENT, descricao TEXT, nome_pessoa TEXT)");
 
-// Rotas da navbar 
 app.get("/", (req, res) => {
     res.sendFile(__dirname + "/public/index.html");
 });
@@ -27,7 +27,6 @@ app.get("/sobre", (req, res) => {
     res.sendFile(__dirname + "/public/sobre.html");
 });
 
-// Rota presente
 app.post("/add-item", (req, res) => {
   const { descricao, pessoa } = req.body;
   db.run("INSERT INTO presente (descricao, nome_pessoa) VALUES (?, ?)", [descricao, pessoa], (err) => {
@@ -69,8 +68,7 @@ app.delete("/delete-item/:id", (req, res) => {
   });
 });
   
-// Inicia o servidor
-const PORT = 21081;
+const PORT = process.env.SERVER_PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`Servidor rodando na porta:${PORT}`);
+  console.log(`Servidor rodando na porta ${PORT}`);
 });
