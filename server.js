@@ -70,7 +70,7 @@ app.delete("/delete-item/:id", (req, res) => {
 });
   
 // Inicia o servidor
-const PORT = process.env.PORT || 3000;
+const PORT = 21081;
 app.listen(PORT, () => {
   console.log(`Servidor rodando na porta:${PORT}`);
 });
