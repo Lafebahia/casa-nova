@@ -1,9 +1,17 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const sqlite3 = require("sqlite3").verbose();
+const https = require("https");
+const fs = require("fs");
 const app = express();
 const db = new sqlite3.Database("./database.db");
 require('dotenv').config();
+
+const options = {
+  key: fs.readFileSync(path.join(__dirname, '../certificado/chave_privada.key')), 
+  cert: fs.readFileSync(path.join(__dirname, '../certificado/certificado.crt')),
+  ca: fs.readFileSync(path.join(__dirname, '../certificado/CA.crt'))
+};
 
 app.use(bodyParser.json());
 app.use(express.static("public"));
@@ -69,6 +77,6 @@ app.delete("/delete-item/:id", (req, res) => {
 });
   
 const PORT = process.env.SERVER_PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Servidor rodando na porta ${PORT}`);
+https.createServer(options, app).listen(PORT, () => {
+  console.log(`Servidor HTTPS rodando na porta ${PORT}`);
 });
