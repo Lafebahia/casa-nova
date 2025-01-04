@@ -7,7 +7,7 @@ async function fetchItems() {
   }
 
 async function updatePessoaPresente(id, pessoa) {
-    const response = await fetch(`/set-item/${id}`, {
+    const response = await fetch(`/set-item-pessoa/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ pessoa }),

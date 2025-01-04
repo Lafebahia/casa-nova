@@ -91,6 +91,17 @@ app.put("/set-item/:id", (req, res) => {
   });
 });
 
+app.put("/set-item-pessoa/:id", (req, res) => {
+  const { id } = req.params;
+  const { pessoa } = req.body;
+  db.run("UPDATE presente SET nome_pessoa = ? WHERE id = ?", [pessoa, id], (err) => {
+    if (err) {
+      return res.status(500).json({ error: "Erro ao atualizar presente" });
+    }
+    res.json({ message: "Presente atualizado com sucesso!" });
+  });
+});
+
 app.delete("/delete-item/:id", (req, res) => {
   const { id } = req.params;
   db.run("DELETE FROM presente WHERE id = ?", [id], (err) => {
