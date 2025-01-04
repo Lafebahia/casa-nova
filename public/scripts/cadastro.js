@@ -48,15 +48,25 @@ function mostrarLista(items) {
     buttonGroup.className = "btn-group";
     buttonGroup.role = "group";
 
-    const editButton = document.createElement("button");
-    editButton.className = "btn btn-sm btn-warning rounded-0";
-    editButton.textContent = "Editar";
+    const editButton = document.createElement("a");
+    editButton.className = "p-2";
+    editButton.style.cursor = "pointer";
+
+    const iconEdit = document.createElement("i");
+    iconEdit.className = "bi bi-pencil-square";
+    editButton.appendChild(iconEdit);
+
     editButton.onclick = () => editItem(id, descricao, nome_pessoa);
     buttonGroup.appendChild(editButton);
 
-    const deleteButton = document.createElement("button");
-    deleteButton.className = "btn btn-sm btn-danger rounded-0";
-    deleteButton.textContent = "Excluir";
+    const deleteButton = document.createElement("a");
+    deleteButton.className = "p-2";
+    deleteButton.style.cursor = "pointer";
+
+    const iconDelete = document.createElement("i");
+    iconDelete.className = "bi bi-trash";
+    deleteButton.appendChild(iconDelete);
+
     deleteButton.onclick = () => deleteItem(id);
     buttonGroup.appendChild(deleteButton);
 
