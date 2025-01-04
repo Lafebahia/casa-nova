@@ -31,8 +31,6 @@ async function fetchItems() {
   const response = await fetch("/get-items");
   const items = await response.json();
 
-  console.log(typeof items)
-
   const listContainer = document.getElementById("presente-list");
   listContainer.innerHTML = ""; // Limpa a lista atual
 

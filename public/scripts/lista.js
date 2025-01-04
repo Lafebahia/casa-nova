@@ -3,7 +3,23 @@ document.addEventListener("DOMContentLoaded", fetchItems);
 async function fetchItems() {
     const response = await fetch("/get-items");
     const items = await response.json();
-  
+    mostrarLista(items);
+  }
+
+async function updatePessoaPresente(id, pessoa) {
+    const response = await fetch(`/set-item/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ pessoa }),
+    });
+    if(response.ok) {
+        fetchItems();
+    } else {
+        alert("Ocorreu uma falha ao incluir o presenteador");
+    }
+}
+
+function mostrarLista(items) {
     const listContainer = document.getElementById("lista-principal");
     listContainer.innerHTML = ""; // Limpa a lista atual
 
@@ -46,17 +62,19 @@ async function fetchItems() {
         listContainer.appendChild(listItem);
         listContainer.appendChild(listItem);
     });
-  }
+}
 
-async function updatePessoaPresente(id, pessoa) {
-    const response = await fetch(`/set-item/${id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ pessoa }),
+async function ordenarListaDisponiveis() {
+    const response = await fetch("/get-items");
+    const items = await response.json();
+    items.sort((a, b) => {
+        if (a.nome_pessoa === "" && b.nome_pessoa !== "") {
+            return -1; 
+        }
+        if (a.nome_pessoa !== "" && b.nome_pessoa === "") {
+            return 1; 
+        }
+        return 0;
     });
-    if(response.ok) {
-        fetchItems();
-    } else {
-        alert("Ocorreu uma falha ao incluir o presenteador");
-    }
+    mostrarLista(items);
 }

@@ -20,7 +20,10 @@ const countdownFunction = setInterval(function() {
     const now = new Date().getTime(); 
     const timeLeft = eventDate - now;  
     const daysLeft = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-    document.getElementById("days").textContent = daysLeft;
+    const daysElement = document.getElementById("days");
+    if (daysElement) {
+        daysElement.textContent = daysLeft;
+    }
     if (timeLeft <= 0) {
         clearInterval(countdownFunction);
         document.getElementById("days").textContent = "É hoje!! 🎉";
