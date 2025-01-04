@@ -88,6 +88,7 @@ function importarArquivo() {
 
 function processarConteudo(conteudo) {
   const linhas = conteudo.split("\n").filter(linha => linha.trim() !== "");
+  console.log(linhas)
   linhas.forEach(linha => {
     const [descricao, pessoa] = linha.split(",").map(part => part?.trim() || null);
     if (descricao) {
