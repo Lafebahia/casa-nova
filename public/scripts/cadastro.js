@@ -30,10 +30,12 @@ document.getElementById("presente-form").addEventListener("submit", async (e) =>
 async function fetchItems() {
   const response = await fetch("/get-items");
   const items = await response.json();
+  mostrarLista(items);
+}
 
+function mostrarLista(items) {
   const listContainer = document.getElementById("presente-list");
   listContainer.innerHTML = ""; // Limpa a lista atual
-
   items.forEach(({ id, descricao, nome_pessoa }) => {
     const listItem = document.createElement("li");
     listItem.className = "list-group-item d-flex justify-content-between align-items-center";
@@ -125,4 +127,19 @@ function limparForm() {
   document.getElementById("item-id").value = "";
   document.getElementById("descricao").value = "";
   document.getElementById("pessoa").value = "";
+}
+
+async function ordenarListaDisponiveis() {
+  const response = await fetch("/get-items");
+  const items = await response.json();
+  items.sort((a, b) => {
+      if (a.nome_pessoa === "" && b.nome_pessoa !== "") {
+          return -1; 
+      }
+      if (a.nome_pessoa !== "" && b.nome_pessoa === "") {
+          return 1; 
+      }
+      return 0;
+  });
+  mostrarLista(items);
 }
