@@ -1,0 +1,32 @@
+@media (max-width: 768px) {
+    body {
+        font-size: 12px; 
+    }
+
+    button {
+        font-size: 0.9em; 
+        padding: 8px 12px; 
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        font-size: 10px; 
+    }
+
+    h2 {
+        font-size: 1.6em; 
+        font-weight: bold;
+    }
+
+    h5 {
+        font-size: 1em; 
+        font-weight: bold;
+    }
+
+    button {
+        font-size: 0.8em; 
+        padding: 6px 10px; 
+    }
+}
+  
