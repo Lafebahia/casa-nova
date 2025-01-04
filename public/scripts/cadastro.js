@@ -87,16 +87,16 @@ function importarArquivo() {
 }
 
 function processarConteudo(conteudo) {
-  const linhas = conteudo.split("\n");
+  const linhas = conteudo.split("\n").filter(linha => linha.trim() !== "");
   linhas.forEach(linha => {
-      const [descricao, pessoa] = linha.split(",");
-      if (descricao) {
-        fetch("/add-item", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ descricao, pessoa }),
-        });
-      }
+    const [descricao, pessoa] = linha.split(",").map(part => part?.trim() || null);
+    if (descricao) {
+      fetch("/add-item", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ descricao, pessoa: pessoa || "" }),
+      });
+    }
   });
   fetchItems();
 }

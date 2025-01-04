@@ -9,11 +9,11 @@ const app = express();
 const db = new sqlite3.Database("./database.db");
 require('dotenv').config();
 
-const options = {
-  key: fs.readFileSync(path.join(__dirname, '../certificado/chave_privada.key')), 
-  cert: fs.readFileSync(path.join(__dirname, '../certificado/certificado.crt')),
-  ca: fs.readFileSync(path.join(__dirname, '../certificado/CA.crt'))
-};
+// const options = {
+//   key: fs.readFileSync(path.join(__dirname, '../certificado/chave_privada.key')), 
+//   cert: fs.readFileSync(path.join(__dirname, '../certificado/certificado.crt')),
+//   ca: fs.readFileSync(path.join(__dirname, '../certificado/CA.crt'))
+// };
 
 function generateAppKey() {
   return crypto.randomBytes(16).toString('hex');
@@ -103,10 +103,10 @@ app.delete("/delete-item/:id", (req, res) => {
   
 const PORT = process.env.SERVER_PORT || 3000;
 // server
-https.createServer(options, app).listen(PORT, () => {
-  console.log(`Servidor HTTPS rodando na porta ${PORT}`);
-});
-// localhost
-// app.listen(PORT, () => {
-//   console.log(`Servidor rodando na porta ${PORT}`);
+// https.createServer(options, app).listen(PORT, () => {
+//   console.log(`Servidor HTTPS rodando na porta ${PORT}`);
 // });
+// localhost
+app.listen(PORT, () => {
+  console.log(`Servidor rodando na porta ${PORT}`);
+});
