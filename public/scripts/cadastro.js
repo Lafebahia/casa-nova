@@ -18,8 +18,6 @@ document.getElementById("presente-form").addEventListener("submit", async (e) =>
 
   if (response.ok) {
     limparForm();
-    document.querySelector("button[type='submit']").textContent = "Adicionar Item";
-    console.log(response)
     fetchItems(); // Atualiza a lista em tempo real
   } else {
     alert("Erro ao adicionar item.");
@@ -135,6 +133,7 @@ function limparForm() {
   document.getElementById("item-id").value = "";
   document.getElementById("descricao").value = "";
   document.getElementById("pessoa").value = "";
+  document.querySelector("button[type='submit']").textContent = "Adicionar Item";
 }
 
 async function ordenarListaDisponiveis() {

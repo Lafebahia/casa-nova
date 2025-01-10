@@ -7,7 +7,11 @@ const path = require("path");
 const crypto = require('crypto');
 const app = express();
 const db = new sqlite3.Database("./database.db");
+const cors = require('cors');
 require('dotenv').config();
+
+app.use(express.json());
+app.use(cors());
 
 const options = {
   key: fs.readFileSync(path.join(__dirname, '../certificado/chave_privada.key')), 
