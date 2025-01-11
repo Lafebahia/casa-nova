@@ -8,19 +8,21 @@ const app = express();
 const mysql = require('mysql2');
 require('dotenv').config();
 
-const connection = mysql.createConnection({
+const connection = mysql.createPool({
   host: process.env.DB_HOST, 
   user: process.env.DB_USERNAME, 
   password: process.env.DB_PASSWORD,
   database: process.env.DB_DATABASE, 
 });
 
-connection.connect((err) => {
-  if (err) {
-    console.error('Erro ao conectar ao Mysql: ', err.message);
-    return;
-  }
-});
+// connection.connect((err) => {
+//   if (err) {
+//     console.error('Erro ao conectar ao Mysql: ', err.message);
+//     return;
+//   }
+// });
+
+module.exports = connection.promise();
 
 const options = {
   key: fs.readFileSync(path.join(__dirname, '../certificado/chave_privada.key')), 
@@ -85,7 +87,7 @@ app.post("/add-item", (req, res) => {
       console.error('Erro ao inserir o registro: ', err.message);
       return;
     }
-    res.json({ message: "Presente adicionado com sucesso!" });
+    res.status(201).json({ message: "Presente adicionado com sucesso!" });
   });
 });
 
@@ -95,7 +97,7 @@ app.get("/get-items", (req, res) => {
       console.error('Erro ao buscar registros: ', err.message);
       return;
     }
-    res.json(results);
+    res.status(200).json(results);
   });
 });
 
@@ -107,7 +109,7 @@ app.put("/set-item/:id", (req, res) => {
       console.error('Erro ao atualizar presente: ', err.message);
       return;
     }
-    res.json({ message: "Presente atualizado com sucesso!" });
+    res.status(200).json({ message: "Presente atualizado com sucesso!" });
   });
 });
 
@@ -119,7 +121,7 @@ app.put("/set-item-pessoa/:id", (req, res) => {
       console.error('Erro ao atualizar presente: ', err.message);
       return;
     }
-    res.json({ message: "Presente atualizado com sucesso!" });
+    res.status(200).json({ message: "Presente atualizado com sucesso!" });
   });
 });
 
@@ -130,7 +132,7 @@ app.delete("/delete-item/:id", (req, res) => {
       console.error('Erro ao excluir o presente: ', err.message);
       return;
     }
-    res.json({ message: "Presente excluído com sucesso!" });
+    res.status(200).json({ message: "Presente excluído com sucesso!" });
   });
 });
   

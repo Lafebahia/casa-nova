@@ -4,7 +4,7 @@ async function fetchItems() {
     const response = await fetch("/get-items");
     const items = await response.json();
     mostrarLista(items);
-  }
+}
 
 async function updatePessoaPresente(id, pessoa) {
     const response = await fetch(`/set-item-pessoa/${id}`, {
@@ -59,7 +59,6 @@ function mostrarLista(items) {
         listItem.appendChild(div);
 
         // Adiciona o item na lista
-        listContainer.appendChild(listItem);
         listContainer.appendChild(listItem);
     });
 }
