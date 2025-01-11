@@ -1,15 +1,26 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const sqlite3 = require("sqlite3").verbose();
 const https = require("https");
 const fs = require("fs");
 const path = require("path");
 const crypto = require('crypto');
 const app = express();
-const db = new sqlite3.Database("./database.db");
+const mysql = require('mysql2');
 require('dotenv').config();
 
-app.use(express.json());
+const connection = mysql.createConnection({
+  host: process.env.DB_HOST, 
+  user: process.env.DB_USERNAME, 
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE, 
+});
+
+connection.connect((err) => {
+  if (err) {
+    console.error('Erro ao conectar ao Mysql: ', err.message);
+    return;
+  }
+});
 
 const options = {
   key: fs.readFileSync(path.join(__dirname, '../certificado/chave_privada.key')), 
@@ -40,7 +51,12 @@ app.use(bodyParser.json());
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 
-db.run("CREATE TABLE IF NOT EXISTS presente (id INTEGER PRIMARY KEY AUTOINCREMENT, descricao TEXT, nome_pessoa TEXT)");
+connection.query('CREATE TABLE IF NOT EXISTS presente (id INT AUTO_INCREMENT PRIMARY KEY, descricao TEXT, nome_pessoa TEXT)', (err, results) => {
+  if (err) {
+    console.error('Erro ao execudar DDL:', err.message);
+    return;
+  }
+});
 
 app.get("/", (req, res) => {
     res.sendFile(__dirname + "/public/index.html");
@@ -64,30 +80,32 @@ app.get("/sobre", (req, res) => {
 
 app.post("/add-item", (req, res) => {
   const { descricao, pessoa } = req.body;
-  db.run("INSERT INTO presente (descricao, nome_pessoa) VALUES (?, ?)", [descricao, pessoa], (err) => {
+  connection.query('INSERT INTO presente (descricao, nome_pessoa) VALUES (?, ?)', [descricao, pessoa], (err, results) => {
     if (err) {
-      return res.status(500).json({ error: "Erro ao adicionar presente" });
+      console.error('Erro ao inserir o registro: ', err.message);
+      return;
     }
     res.json({ message: "Presente adicionado com sucesso!" });
   });
 });
 
 app.get("/get-items", (req, res) => {
-    db.all("SELECT * FROM presente", (err, rows) => {
-        if (err) {
-          res.status(500).json({ error: 'Erro ao consultar os presentes' });
-        } else {
-          res.json(rows);
-        }
-    });
+  connection.query('SELECT * FROM presente', (err, results) => {
+    if (err) {
+      console.error('Erro ao buscar registros: ', err.message);
+      return;
+    }
+    res.json(results);
+  });
 });
 
 app.put("/set-item/:id", (req, res) => {
   const { id } = req.params;
   const { descricao, pessoa } = req.body;
-  db.run("UPDATE presente SET descricao = ?, nome_pessoa = ? WHERE id = ?", [descricao, pessoa, id], (err) => {
+  connection.query('UPDATE presente SET descricao = ?, nome_pessoa = ? WHERE id = ?', [descricao, pessoa, id], (err, results) => {
     if (err) {
-      return res.status(500).json({ error: "Erro ao atualizar presente" });
+      console.error('Erro ao atualizar presente: ', err.message);
+      return;
     }
     res.json({ message: "Presente atualizado com sucesso!" });
   });
@@ -96,9 +114,10 @@ app.put("/set-item/:id", (req, res) => {
 app.put("/set-item-pessoa/:id", (req, res) => {
   const { id } = req.params;
   const { pessoa } = req.body;
-  db.run("UPDATE presente SET nome_pessoa = ? WHERE id = ?", [pessoa, id], (err) => {
+  connection.query('UPDATE presente SET nome_pessoa = ? WHERE id = ?', [pessoa, id], (err, results) => {
     if (err) {
-      return res.status(500).json({ error: "Erro ao atualizar presente" });
+      console.error('Erro ao atualizar presente: ', err.message);
+      return;
     }
     res.json({ message: "Presente atualizado com sucesso!" });
   });
@@ -106,9 +125,10 @@ app.put("/set-item-pessoa/:id", (req, res) => {
 
 app.delete("/delete-item/:id", (req, res) => {
   const { id } = req.params;
-  db.run("DELETE FROM presente WHERE id = ?", [id], (err) => {
+  connection.query('DELETE FROM presente WHERE id = ?', [id], (err, results) => {
     if (err) {
-      return res.status(500).json({ error: "Erro ao excluir o presente" });
+      console.error('Erro ao excluir o presente: ', err.message);
+      return;
     }
     res.json({ message: "Presente excluído com sucesso!" });
   });
